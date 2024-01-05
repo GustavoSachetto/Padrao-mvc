@@ -21,6 +21,24 @@ class Page
     private static function getFooter() {
         return View::render('pages/footer');
     }
+
+    /**
+     * Método responsável por renderizar o layout de paginação
+     * @param Request $request
+     * @param Pagination $obPagination
+     * @return string
+     */
+    public static function getPagination($request, $obPagination)
+    {
+        // PÁGINAS
+        $pages = $obPagination->getPages();
+        
+        // VERIFICA A QUANTIADE DE PÁGINAS
+        if (count($pages) <= 1) return '';
+
+        $links = '';
+    }
+
     /**
      * Método responsável por retornar o conteúdo (view) da nossa página genérica
      * @param string $title, $content

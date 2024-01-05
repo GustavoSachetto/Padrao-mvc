@@ -12,9 +12,10 @@ class Testimony extends Page
     /**
      * Método responsável por obter a renderização dos itens de depoimentos da página
      * @param Request $request
+     * @param Pagination $obPagination
      * @return string
      */
-    private static function getTestimonyItens($request)
+    private static function getTestimonyItens($request, &$obPagination)
     {
         // DEPOIMENOTS
         $itens = '';
@@ -52,7 +53,8 @@ class Testimony extends Page
         // VIEW DE DEPOIMENTOS
         $title = 'Página depoimentos';
         $content = View::render('pages/testimonies', [
-            'itens' => self::getTestimonyItens($request)
+            'itens' => self::getTestimonyItens($request, $obPagination),
+            'pagination' => parent::getPagination($request, $obPagination)
         ]);
         // RETORNA A VIEW DA PÁGINA
         return parent::getPage($title, $content);
