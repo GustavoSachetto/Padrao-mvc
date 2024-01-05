@@ -16,7 +16,7 @@ class About extends Page
         $obOrganization = new Organization();
 
         // VIEW DA PAGINA ABOUT
-        $title = 'Página about';
+        $title = 'Página sobre';
         $content = View::render('pages/about', [
             'name' => $obOrganization->name,
             'description' => $obOrganization->description

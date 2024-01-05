@@ -1,16 +1,10 @@
 <?php 
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/includes/app.php';
 
-use App\Utils\View;
 use App\Http\Router;
 
-define('URL', 'http://localhost/Padrao-mvc');
-
-View::init([
-    'URL' => URL
-]);
-
+// INICIA O ROUTER
 $obRouter = new Router(URL);
 
 // INCLUI AS ROTAS DE PÁGINAS
