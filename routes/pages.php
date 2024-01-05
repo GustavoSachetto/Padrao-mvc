@@ -18,8 +18,8 @@ $obRouter->get('/about', [
 ]);
 
 // ROTA DINÂMICA
-$obRouter->get('/pagina{idPagina}', [
-    function($idPagina){
-        return new Response(200, 'Página'.$idPagina);
+$obRouter->get('/pagina/{idPagina}/{acao}', [
+    function($idPagina, $acao){
+        return new Response(200, 'Página ' . $idPagina .' - '. $acao);
     }
 ]);
