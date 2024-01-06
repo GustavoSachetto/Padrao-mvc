@@ -17,7 +17,7 @@ class Testimony extends Page
      */
     private static function getTestimonyItens($request, &$obPagination)
     {
-        // DEPOIMENOTS
+        // DEPOIMENTOS
         $itens = '';
 
         // QUANTIDADE TOTAL DE REGISTROS
