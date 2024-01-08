@@ -46,7 +46,7 @@ class Queue
      */
     public function __construct($middlewares, $controller, $controllerArgs)
     {
-        $this->middlewares    = array_merge(self::$default);
+        $this->middlewares    = array_merge(self::$default, $middlewares);
         $this->controller     = $controller;
         $this->controllerArgs = $controllerArgs;
     }
