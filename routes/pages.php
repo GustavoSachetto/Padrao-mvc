@@ -5,6 +5,9 @@ use App\Controller\Pages;
 
 // ROTA HOME
 $obRouter->get('/', [
+    'middlewares' => [
+        'required-admin-logout'
+    ],
     function(){
         return new Response(200, Pages\Home::getHome());
     }
@@ -12,6 +15,9 @@ $obRouter->get('/', [
 
 // ROTA SOBRE
 $obRouter->get('/about', [
+    'middlewares' => [
+        'required-admin-logout'
+    ],
     function(){
         return new Response(200, Pages\About::getAbout());
     }
@@ -19,6 +25,9 @@ $obRouter->get('/about', [
 
 // ROTA DEPOIMENTOS
 $obRouter->get('/testimonies', [
+    'middlewares' => [
+        'required-admin-logout'
+    ],
     function($request){
         return new Response(200, Pages\Testimony::getTestimonies($request));
     }
@@ -26,6 +35,9 @@ $obRouter->get('/testimonies', [
 
 // ROTA DEPOIMENTOS (INSERT)
 $obRouter->post('/testimonies', [
+    'middlewares' => [
+        'required-admin-logout'
+    ],
     function($request){
         return new Response(200, Pages\Testimony::insertTestimony($request));
     }

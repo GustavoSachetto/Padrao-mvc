@@ -63,4 +63,69 @@ class Testimony extends Page
         // RETORNA A PÁGINA COMPLETA
         return parent::getPanel('Página depoimentos', $content, 'testimonies');
     }
+
+    /**
+     * Métoto reponsável por retornar o formulário de cadastro de um novo depoimento
+     * @param Request $request
+     * @return string
+     */
+    public static function getNewTestimony($request)
+    {
+        // CONTEÚDO DO FORMULÁRIO
+        $content = View::render('admin/modules/testimonies/form', [
+            'title' => 'Cadastrar depoimento',
+            'nome' => '',
+            'mensagem' => ''
+        ]);
+
+        // RETORNA A PÁGINA COMPLETA
+        return parent::getPanel('Cadastrar depoimento', $content, 'testimonies');
+    }
+
+    /**
+     * Métoto reponsável por cadastrar um novo depoimento no banco
+     * @param Request $request
+     * @return string
+     */
+    public static function setNewTestimony($request)
+    {
+        // POST VARS
+        $postvars = $request->getPostVars();
+
+        // NOVA INSTÂNCIA DE DEPOIMENTO
+        $obTestimony = new EntityTestimony;
+        $obTestimony->nome     = $postvars['nome'] ?? '';
+        $obTestimony->mensagem = $postvars['mensagem'] ?? '';
+        $obTestimony->cadastrar();
+
+        // REDIRECIONA O USUÁRIO
+        $request->getRouter()->redirect('/admin/testimonies/'.$obTestimony->id.'/edit');
+    }
+
+    /**
+     * Métoto reponsável por retornar o formulário de edição de um depoimento
+     * @param Request $request
+     * @param integer $id
+     * @return string
+     */
+    public static function getEditTestimony($request, $id)
+    {
+        // NOVA INSTÂNCIA DE DEPOIMENTO
+        $obTestimony = EntityTestimony::getTestimonyById($id);
+
+        // VALIDA A INSTANCIA
+        if (!$obTestimony instanceof EntityTestimony) {
+            $request->getRouter()->redirect('/admin/testimonies');
+        }
+
+        // CONTEÚDO DO FORMULÁRIO DE EDIÇÃO
+        $content = View::render('admin/modules/testimonies/form', [
+            'title' => 'Editar depoimento',
+            'nome' => $obTestimony->nome,
+            'mensagem' => $obTestimony->mensagem
+        ]);
+
+        // RETORNA A PÁGINA COMPLETA
+        return parent::getPanel('Editar depoimento', $content, 'testimonies');
+    }
 }

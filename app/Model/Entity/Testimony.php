@@ -62,4 +62,14 @@ class Testimony
     {
         return (new Database('depoimentos'))->select($where, $order, $limit, $fields);
     }
+
+    /**
+     * Método reponsável por retornar um depoimento com base no seu ID
+     * @param  integer $id
+     * @return Testimony
+     */
+    public static function getTestimonyById($id)
+    {
+        return self::getTestimonies('id = '.$id)->fetchObject(self::class);
+    }
 }
