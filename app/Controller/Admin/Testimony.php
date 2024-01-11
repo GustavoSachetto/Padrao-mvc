@@ -99,7 +99,12 @@ class Testimony extends Page
         $obTestimony->cadastrar();
 
         // REDIRECIONA O USUÁRIO
-        $request->getRouter()->redirect('/admin/testimonies/'.$obTestimony->id.'/edit');
+        $request->getRouter()->redirect('/admin/testimonies/'.$obTestimony->id.'/edit?status=created');
+    }
+
+    public static function getStatus($request)
+    {
+        $queryParams = $request->getQueryParams();
     }
 
     /**
@@ -127,5 +132,34 @@ class Testimony extends Page
 
         // RETORNA A PÁGINA COMPLETA
         return parent::getPanel('Editar depoimento', $content, 'testimonies');
+    }
+
+    /**
+     * Método reponsável por gravar a atualização de um depoimento
+     * @param Request $request
+     * @param integer $id
+     * @return void
+     */
+    public static function setEditTestimony($request, $id)
+    {
+        // NOVA INSTÂNCIA DE DEPOIMENTO
+        $obTestimony = EntityTestimony::getTestimonyById($id);
+
+        // VALIDA A INSTANCIA
+        if (!$obTestimony instanceof EntityTestimony) {
+            $request->getRouter()->redirect('/admin/testimonies');
+        }
+        
+        // POST VARS
+        $postvars = $request->getPostVars();
+
+        // INSTÂNCIA DE DEPOIMENTO
+        $obTestimony->nome     = $postvars['nome'] ??  $obTestimony->nome;
+        $obTestimony->mensagem = $postvars['mensagem'] ??  $obTestimony->mensagem;
+
+        $obTestimony->atualizar();
+
+        // REDIRECIONA O USUÁRIO
+        $request->getRouter()->redirect('/admin/testimonies/'.$obTestimony->id.'/edit?status=updated');
     }
 }
