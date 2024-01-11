@@ -52,3 +52,23 @@ $obRouter->post('/admin/testimonies/{id}/edit', [
         return new Response(200, Admin\Testimony::setEditTestimony($request, $id));
     }
 ]);
+
+// ROTA DE EXCLUSÃO DE UM DEPOIMENTO
+$obRouter->get('/admin/testimonies/{id}/delete', [
+    'middlewares' => [
+        'required-admin-login'
+    ],
+    function($request, $id){
+        return new Response(200, Admin\Testimony::getDeleteTestimony($request, $id));
+    }
+]);
+
+// ROTA DE EXCLUSÃO DE UM DEPOIMENTO (POST)
+$obRouter->post('/admin/testimonies/{id}/delete', [
+    'middlewares' => [
+        'required-admin-login'
+    ],
+    function($request, $id){
+        return new Response(200, Admin\Testimony::setDeleteTestimony($request, $id));
+    }
+]);

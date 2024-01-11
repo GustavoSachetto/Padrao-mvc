@@ -3,8 +3,7 @@
 namespace App\Session\Admin;
 
 class Login
-{
-
+{   
     /**
      * Método responsável por iniciar a sessão
      * @return void
@@ -49,6 +48,19 @@ class Login
 
         // RETORNA A VERIFICAÇÃO
         return isset($_SESSION['admin']['usuario']['id']);
+    }
+
+    /**
+     * Método responsável por retornar o usuário que está logado
+     * @return integer
+     */
+    public static function getLogged()
+    {
+        // VERIFICA SE ESTÁ LOGADO
+        self::isLogged();
+
+        // RETORNA O USUÁRIO LOGADO
+        return $_SESSION['admin']['usuario'];
     }
 
     /**
