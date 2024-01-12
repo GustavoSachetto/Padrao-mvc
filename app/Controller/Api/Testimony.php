@@ -76,7 +76,6 @@ class Testimony extends Api
         // VÁLIDA SE O DEPOIMENTO EXISTE
         if (!$obTestimony instanceof EntityTestimony) {
             throw new Exception("O depoimento ".$id." não foi encontrado.", 404);
-            
         }
 
         // RETORNA OS DETALHES DO DEPOIMENTO
@@ -85,6 +84,103 @@ class Testimony extends Api
             'nome'     => $obTestimony->nome,
             'mensagem' => $obTestimony->mensagem,
             'data'     => $obTestimony->data
+        ];
+    }
+
+    /**
+     * Método responsável por cadastrar um novo depoimento
+     * @param Request $request
+     * @return array
+     */
+    public static function setNewTestimony($request)
+    {
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        // VALIDA CAMPOS OBRIGATÓRIOS
+        if (!isset($postVars['nome']) || !isset($postVars['mensagem'])) {
+            throw new Exception("Os campos 'nome' e 'mensagem' são obrigatórios.", 400);
+        }
+
+        // NOVA INSTANCIA DE DEPOIMENTO
+        $obTestimony = new EntityTestimony;
+
+        $obTestimony->nome = $postVars['nome'];
+        $obTestimony->mensagem = $postVars['mensagem'];
+        $obTestimony->cadastrar();
+        
+        // RETORNA OS DETALHES DO DEPOIMENTO CADASTRADO
+        return [
+            'id'       => $obTestimony->id,
+            'nome'     => $obTestimony->nome,
+            'mensagem' => $obTestimony->mensagem,
+            'data'     => $obTestimony->data,
+            'status'   => 'success'
+        ];
+    }
+
+    /**
+     * Método responsável por atualizar um depoimento
+     * @param Request $request
+     * @return array
+     */
+    public static function setEditTestimony($request, $id)
+    {
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        // VALIDA CAMPOS OBRIGATÓRIOS
+        if (!isset($postVars['nome']) || !isset($postVars['mensagem'])) {
+            throw new Exception("Os campos 'nome' e 'mensagem' são obrigatórios.", 400);
+        }
+
+        // NOVA INSTANCIA DE DEPOIMENTO
+        $obTestimony = EntityTestimony::getTestimonyById($id);
+
+        // VALIDA A INSTANCIA
+        if (!$obTestimony instanceof EntityTestimony) {
+            throw new Exception("O depoimento ".$id." não foi encontrado.", 404);
+        }
+
+        // ATUALIZA O DEPOIMENTO
+        $obTestimony->nome = $postVars['nome'];
+        $obTestimony->mensagem = $postVars['mensagem'];
+        $obTestimony->atualizar();
+        
+        // RETORNA OS DETALHES DO DEPOIMENTO ATUALIZADO
+        return [
+            'id'       => $obTestimony->id,
+            'nome'     => $obTestimony->nome,
+            'mensagem' => $obTestimony->mensagem,
+            'data'     => $obTestimony->data,
+            'status'   => 'success'
+        ];
+    }
+
+    /**
+     * Método responsável por deletar um depoimento
+     * @param Request $request
+     * @return array
+     */
+    public static function setDeleteTestimony($request, $id)
+    {
+        // POST VARS
+        $postVars = $request->getPostVars();
+
+        // NOVA INSTANCIA DE DEPOIMENTO
+        $obTestimony = EntityTestimony::getTestimonyById($id);
+
+        // VALIDA A INSTANCIA
+        if (!$obTestimony instanceof EntityTestimony) {
+            throw new Exception("O depoimento ".$id." não foi encontrado.", 404);
+        }
+
+        // DELETA O DEPOIMENTO
+        $obTestimony->excluir();
+        
+        // RETORNA O STATUS DO DEPOIMENTO DELETADO
+        return [
+            'status'   => 'success'
         ];
     }
 }
