@@ -94,10 +94,20 @@ class User extends Api
     {
         // POST VARS
         $postVars = $request->getPostVars();
+        $nome  = $postVars['nome'];
+        $email = $postVars['email'];
+        $senha = $postVars['senha'];
 
         // VALIDA CAMPOS OBRIGATÓRIOS
-        if (!isset($postVars['nome']) || !isset($postVars['email']) || !isset($postVars['senha'])) {
+        if (!isset($nome) || !isset($email) || !isset($senha)) {
             throw new Exception("Os campos 'nome', 'email' e 'senha' são obrigatórios.", 400);
+        }
+        
+        // VALIDA INSTANCIA DE USUÁRIO
+        $obEntityUser = EntityUser::getUserByEmail($email);
+        
+        if ($obEntityUser instanceof EntityUser) {
+            throw new Exception("Usuario não criado, email já existente.", 400);
         }
 
         // NOVA INSTANCIA DE USUÁRIO
@@ -123,7 +133,7 @@ class User extends Api
      * @return array
      */
     public static function setEditUser($request, $id)
-    {
+    {   
         // POST VARS
         $postVars = $request->getPostVars();
 
@@ -168,6 +178,10 @@ class User extends Api
         // VALIDA A INSTANCIA
         if (!$obUser instanceof EntityUser) {
             throw new Exception("O usuário ".$id." não foi encontrado.", 404);
+        }
+
+        if ($obUser->id == $request->user->id) {
+            throw new Exception("Não é possivel excluir o cadastro atualmente conectado", 400);
         }
 
         // DELETA O DEPOIMENTO

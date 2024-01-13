@@ -177,12 +177,6 @@ class User extends Page
             $request->getRouter()->redirect('/admin/users');
         } 
 
-        // POST VARS
-        $postVars = $request->getPostVars();
-        $nome  = $postVars['nome'] ?? '';
-        $email = $postVars['email'] ?? '';
-        $senha = $postVars['senha'] ?? '';
-
         // CONTEÚDO DO FORMULÁRIO DE EDIÇÃO
         $content = View::render('admin/modules/users/form', [
             'title'  => 'Editar usuário',
