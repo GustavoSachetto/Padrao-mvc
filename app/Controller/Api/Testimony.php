@@ -164,9 +164,6 @@ class Testimony extends Api
      */
     public static function setDeleteTestimony($request, $id)
     {
-        // POST VARS
-        $postVars = $request->getPostVars();
-
         // NOVA INSTANCIA DE DEPOIMENTO
         $obTestimony = EntityTestimony::getTestimonyById($id);
 
