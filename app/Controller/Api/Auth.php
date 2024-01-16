@@ -17,8 +17,8 @@ class Auth extends Api
     {
         // POST VARS
         $postVars = $request->getPostVars();
-        $email = $postVars['email'] ?? null;
-        $senha = $postVars['senha'] ?? null;
+        $email = $postVars['email'];
+        $senha = $postVars['senha'];
 
         // VALIDA OS CAMPOS OBRIGATÓRIOS
         if (!isset($email) || !isset($senha)) {

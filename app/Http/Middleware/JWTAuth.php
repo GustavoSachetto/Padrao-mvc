@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Exception;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use App\Model\Entity\User;
 
 class JWTAuth
@@ -21,16 +22,20 @@ class JWTAuth
         // TOKEN PURO EM JWT
         $jwt = isset($headers['Authorization']) ? str_replace('Bearer', '', $headers['Authorization']) : '';
 
-        // BUSCA O USUÁRIO PELO E-MAIL
-        $obUser = User::getUserByEmail($_SERVER['PHP_AUTH_USER']);
+        // DECONE DO JWT PURO
+        $decoded = JWT::decode($jwt, new Key(getenv('JWT_KEY'), 'HS256'));
 
-        // VERIFICA A INSTÂNCIA 
-        if (!$obUser instanceof User) {
-            return false;
-        }
+        echo "<pre>";
+        print_r($decoded);
+        echo "</pre>"; exit;
+        // EMAIL
+        $email = $decode['email'] ?? '';
 
-        // VALIDA A SENHA E RETORNA O USUÁRIO
-        return password_verify($_SERVER['PHP_AUTH_PW'], $obUser->senha) ? $obUser : false;
+        // BUSCA O USUÁRIO PELO EMAIL
+        $obUser = User::getUserByEmail($email);
+
+        // RETORNA O USUÁRIO
+        return $obUser instanceof User ? $obUser : false;
     }
 
     /**
