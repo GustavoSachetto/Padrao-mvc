@@ -13,6 +13,17 @@ $obRouter->get('/api/v1/users', [
     }
 ]);
 
+// ROTA DE CONSULTA DO USUÁRIO  ATUAL
+$obRouter->get('/api/v1/users/me', [
+    'middlewares' => [
+        'api',
+        'jwt-auth'
+    ],
+    function($request) {
+        return new Response(200, ['sucesso'=>true], 'application/json');
+    }
+]);
+
 // ROTA DE CONSULTA INDIVIDUAL DE USUÁRIOS
 $obRouter->get('/api/v1/users/{id}', [
     'middlewares' => [
