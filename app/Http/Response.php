@@ -87,10 +87,10 @@ class Response
         switch ($this->contentType) {
             case 'text/html':
                 echo $this->content;
-        }
-        switch ($this->contentType) {
+                break;
             case 'application/json':
                 echo json_encode($this->content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                break;
         }
     }
 }
