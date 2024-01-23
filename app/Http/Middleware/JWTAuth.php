@@ -18,16 +18,17 @@ class JWTAuth
     {
         // HEADERS
         $headers = $request->getHeaders();
-        
+
         // TOKEN PURO EM JWT
-        $jwt = isset($headers['Authorization']) ? str_replace('Bearer', '', $headers['Authorization']) : '';
-
+        $jwt = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers['Authorization']) : '';
+        
         // DECONE DO JWT PURO
-        $decoded = JWT::decode($jwt, new Key(getenv('JWT_KEY'), 'HS256'));
+        try {
+            $decode = (array)JWT::decode($jwt, new Key(getenv('JWT_KEY'), 'HS256'));
+        } catch (\Exception $e) {
+            throw new Exception("Token inválido", 403);
+        }
 
-        echo "<pre>";
-        print_r($decoded);
-        echo "</pre>"; exit;
         // EMAIL
         $email = $decode['email'] ?? '';
 

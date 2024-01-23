@@ -86,6 +86,24 @@ class User extends Api
     }
 
     /**
+     * Método responsável por retornar o usuário atualmente conectado
+     * @param Request $request
+     * @return void
+     */
+    public static function getCurrentUser($request)
+    {
+        // USUÁRIO ATUAL
+        $obUser = $request->user;
+
+        // RETORNA OS DETALHES DO USUÁRIO   
+        return [
+            'id'     => $obUser->id,
+            'nome'   => $obUser->nome,
+            'email'  => $obUser->email
+        ];
+    }
+
+    /**
      * Método responsável por cadastrar um novo usuário
      * @param Request $request
      * @return array
