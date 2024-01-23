@@ -4,7 +4,7 @@ use App\Http\Response;
 use App\Controller\Pages;
 
 // ROTA HOME
-$obRouter->get('', [
+$obRouter->get('/', [
     'middlewares' => [
         'required-admin-logout'
     ],
