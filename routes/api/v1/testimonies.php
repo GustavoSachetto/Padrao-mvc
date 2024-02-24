@@ -6,6 +6,7 @@ use App\Controller\Api;
 // ROTA DE LISTAGEM DE DEPOIMENTOS
 $obRouter->get('/api/v1/testimonies', [
     'middlewares' => [
+        'cache',
         'api'
     ],
     function($request) {

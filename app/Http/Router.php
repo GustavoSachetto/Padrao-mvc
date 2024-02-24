@@ -93,7 +93,7 @@ class Router
 
         //VARIÁVEIS DA ROTA
         $params['variables'] = [];
-        
+
         // PADRÃO DE VALIDAÇAO DAS VARIÁVEIS DAS ROTAS
         $patternVariable = '/{(.*?)}/';
         if (preg_match_all($patternVariable, $route, $matches)) {
@@ -156,7 +156,7 @@ class Router
      * Método responsável por retornar a URI desconsiderando o prefixo
      * @return string
      */
-    private function getUri()
+    public function getUri()
     {
         // URI DA REQUEST
         $uri = $this->request->getUri();
@@ -218,7 +218,7 @@ class Router
 
             // VERIFICA CONTROLADOR DA ROTA
             if (!isset($route['controller'])) {
-                throw new Exception("Aj Url não pode ser processada", 500);
+                throw new Exception("A Url não pode ser processada", 500);
             }
 
             // ARGUMENTOS DA FUNÇÃO

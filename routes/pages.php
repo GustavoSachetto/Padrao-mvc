@@ -6,7 +6,8 @@ use App\Controller\Pages;
 // ROTA HOME
 $obRouter->get('/', [
     'middlewares' => [
-        'required-admin-logout'
+        'required-admin-logout',
+        'cache'
     ],
     function(){
         return new Response(200, Pages\Home::getHome());
